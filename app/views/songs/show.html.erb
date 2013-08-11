@@ -6,17 +6,15 @@
 </h1>
 
 <p>
-  via: <%= link_to "Listen", @song.url %>
-</p>
-
-<p>
-  <% @song.provider %>
-</p>
-
-<p>
   <%= raw @song.embed_code %>
 </p>
 
 
+<p>
+<%= link_to "via: #{@song.provider }", @song.url %>
+</p>
+
+<% if can? :manage, @song %>
 <%= link_to 'Edit', edit_song_path(@song) %> |
 <%= link_to 'Back', songs_path %>
+<% end %>

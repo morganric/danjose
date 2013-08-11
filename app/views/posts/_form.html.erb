@@ -9,7 +9,7 @@
       <%= f.input :copy, :input_html => { :cols => 60, :rows => 3 } %>
     </p>
 
-    <%= f.association :songs , :label => "Select Song" %>
+    <%= f.association :songs , :label => "Select Song #{link_to 'add song', new_song_path, :class => 'btn btn-mini'}" %>
 
   </div>
 
@@ -17,3 +17,8 @@
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $('#post_song_ids').removeClass('optional').removeAttr("multiple").removeAttr("size");
+
+</script>

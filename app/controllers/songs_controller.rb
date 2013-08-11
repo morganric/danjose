@@ -1,5 +1,6 @@
 class SongsController < ApplicationController
   load_and_authorize_resource
+  skip_authorize_resource :only => [:index, :show]
   # GET /songs
   # GET /songs.json
   def index
