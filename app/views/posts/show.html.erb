@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<% if can? :manage, @post %>
+<%= link_to 'Edit', edit_post_path(@post), :class => "btn pull-right" %>
+<% end %>
+
+
+  <h1><%= @post.title %></h1>
+  <p>
+	  <%= image_tag(@post.image) %>
+  </p>
+  <p>
+  	<%= @post.copy %>
+  </p>
+
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active">
+      <a href="#guesses">Guesses</a>
+    </li>
+    <li>
+      <a href="#guess">Guess</a>
+    </li>
+    <li>
+      <a href="#song">Song</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="guesses">  
+      <ol>
+        <% @post.guesses.each do |g| %>
+          <li>
+            <%= link_to g.title, guess_path(g) %>
+            <br/>
+            by <%= g.user.name %>
+          </li> 
+        <% end %>
+      </ol>
+    </div>
+    <div class="tab-pane" id="guess">
+       <%= render :partial => '/guesses/form', :guess => @guess %>
+    </div>
+    <div class="tab-pane" id="song">
+       <%= @song.title %>
+        <p>
+          <%= link_to 'Listen', song_path(@song) %>
+        </p>
+    </div>
+  </div>
+ 
+
+
+<script>
+  $(function () {
+   $('#myTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    })
+  })
+</script> 

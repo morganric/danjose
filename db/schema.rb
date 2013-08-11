@@ -11,7 +11,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130811111001) do
+ActiveRecord::Schema.define(:version => 20130811142836) do
+
+  create_table "guesses", :force => true do |t|
+    t.string   "title"
+    t.string   "artist"
+    t.string   "url"
+    t.string   "provider"
+    t.text     "embed_code"
+    t.boolean  "correct"
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "posts", :force => true do |t|
+    t.string   "image"
+    t.string   "thumbnail"
+    t.text     "copy"
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "posts_songs", :id => false, :force => true do |t|
+    t.integer "post_id"
+    t.integer "song_id"
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -23,6 +50,16 @@ ActiveRecord::Schema.define(:version => 20130811111001) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "songs", :force => true do |t|
+    t.string   "title"
+    t.string   "artist"
+    t.string   "url"
+    t.string   "provider"
+    t.text     "embed_code"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

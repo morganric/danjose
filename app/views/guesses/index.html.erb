@@ -1,0 +1,22 @@
+<h1>Listing guesses</h1>
+
+<ul>
+<% @guesses.each do |guess| %>
+    <%= guess.user_id %>
+    <%= guess.title %>
+    <%= guess.artist %>
+    <%= guess.url %>
+    <%= guess.provider %>
+    <%= guess.embed_code %>
+    <%= guess.correct %>
+    <%= guess.user_id %>
+    <%= guess.post_id %>
+    <%= link_to 'Show', guess %>
+    <%= link_to 'Edit', edit_guess_path(guess) %>
+    <%= link_to 'Destroy', guess, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<% end %>
+
+</ul>
+
+<%= link_to 'New Guess', new_guess_path %>

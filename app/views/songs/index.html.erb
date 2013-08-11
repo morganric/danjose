@@ -1,0 +1,23 @@
+<%= link_to 'Add New Song', new_song_path %>
+<h1>Songs</h1>
+
+
+<% @songs.each do |song| %>
+
+    <h2><%= song.title %> by 
+    <%= song.artist %></h2>
+
+    <p><%= link_to 'Listen', song.url %></p>
+    <p>via: <%= song.provider %></p>
+    <p>
+        <%= raw song.embed_code %>
+    </p>
+
+    <%= link_to 'Show', song %>
+    <%= link_to 'Edit', edit_song_path(song) %>
+    <%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %>
+    
+<% end %>
+
+
+

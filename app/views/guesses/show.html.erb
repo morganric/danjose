@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @guess.title %>
+</p>
+
+<p>
+  <b>Artist:</b>
+  <%= @guess.artist %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @guess.url %>
+</p>
+
+<p>
+  <b>Provider:</b>
+  <%= @guess.provider %>
+</p>
+
+<p>
+  <b>Embed code:</b>
+  <%= @guess.embed_code %>
+</p>
+
+<p>
+  <b>Correct:</b>
+  <%= @guess.correct %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @guess.user_id %>
+</p>
+
+<p>
+  <b>Post:</b>
+  <%= @guess.post_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_guess_path(@guess) %> |
+<%= link_to 'Back', guesses_path %>

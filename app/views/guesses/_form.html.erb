@@ -1,0 +1,18 @@
+<%= simple_form_for(@guess) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title %>
+    <%= f.input :artist %>
+    <%= f.input :url %>
+    <%= f.input :provider,  :as => :hidden %>
+    <%= f.input :embed_code, :input_html => { :cols => 60, :rows => 3 }, :placeholder => "Paste embed code here" %>
+    <%= f.input :correct,  :as => :hidden  %>
+    <%= f.input :user_id,  :as => :hidden , :input_html => {:value => current_user.id } %>
+    <%= f.input :post_id,  :as => :hidden ,  :input_html => {:value => @post.id } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
