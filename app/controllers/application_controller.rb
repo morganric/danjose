@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
+ # include SessionsHelper
   protect_from_forgery
-  include SessionsHelper
+ 
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
