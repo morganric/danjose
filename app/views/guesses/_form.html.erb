@@ -8,7 +8,9 @@
     <%= f.input :provider,  :as => :hidden %>
     <%= f.input :embed_code, :input_html => { :cols => 60, :rows => 3 }, :placeholder => "Paste embed code here" %>
     <%= f.input :correct,  :as => :hidden  %>
+    <% if current_user %>
     <%= f.input :user_id,  :as => :hidden , :input_html => {:value => current_user.id } %>
+    <% end %>
     <%= f.input :post_id,  :as => :hidden ,  :input_html => {:value => @post.id } %>
   </div>
 

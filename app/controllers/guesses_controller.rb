@@ -1,4 +1,5 @@
 class GuessesController < ApplicationController
+  load_and_authorize_resource
   # GET /guesses
   # GET /guesses.json
   def index

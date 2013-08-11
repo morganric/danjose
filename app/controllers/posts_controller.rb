@@ -1,5 +1,8 @@
 class PostsController < ApplicationController
   load_and_authorize_resource
+  skip_authorize_resource :only => [:index,:show]
+  # skip_authorize_resource :only => :show
+  # skip_authorize_resource(:index,:show)
   # GET /posts
   # GET /posts.json
   def index
