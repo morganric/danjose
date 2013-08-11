@@ -1,5 +1,9 @@
 class GuessesController < ApplicationController
+  before_filter :authenticate_user!, :only => [:new, :create, :update, :destroy]
+
   load_and_authorize_resource
+  skip_authorize_resource :only => [:show,:create,:new,:destroy]
+
   # GET /guesses
   # GET /guesses.json
   def index
@@ -25,8 +29,12 @@ class GuessesController < ApplicationController
   # GET /guesses/new
   # GET /guesses/new.json
   def new
-    @guess = Guess.new
+    if !anyone_signed_in?
+      deny_access
+    else
 
+      @guess = Guess.new
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @guess }
@@ -42,10 +50,11 @@ class GuessesController < ApplicationController
   # POST /guesses.json
   def create
     @guess = Guess.new(params[:guess])
+    @post = Post.find(@guess.post_id)
 
     respond_to do |format|
       if @guess.save
-        format.html { redirect_to @guess, notice: 'Guess was successfully created.' }
+        format.html { redirect_to @post, notice: 'Guess was successfully created.' }
         format.json { render json: @guess, status: :created, location: @guess }
       else
         format.html { render action: "new" }

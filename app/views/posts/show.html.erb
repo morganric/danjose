@@ -39,7 +39,7 @@
       <ol>
         <% @post.guesses.each do |g| %>
           <li>
-            <%= link_to g.title, guess_path(g) %>
+            <%= link_to "#{g.title} - #{g.artist}", guess_path(g) %>
             <br/>
             by <%= g.user.name %>
           </li> 

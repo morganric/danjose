@@ -1,12 +1,9 @@
 Danjose::Application.routes.draw do
   resources :guesses
-
-
   resources :songs
-
-
   resources :posts
 
+  match "/home/goodbye" => "home#goodbye"
 
   authenticated :user do
     root :to => 'posts#index'
