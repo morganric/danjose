@@ -1,55 +1,64 @@
-<p id="notice"><%= notice %></p>
+<div class="row clearfix">
 
-<% if can? :manage, @post %>
-<%= link_to 'Edit', edit_post_path(@post), :class => "btn pull-right" %>
-<% end %>
+  <div class="span8">
+   
+    <h1><%= @post.title %></h1>
+    <p>
+  	  <%= image_tag(@post.image) %>
+    </p>
+    <hr/>
+    <p class="">
+    	<%= @post.copy %>
+    </p>
+    <hr/>
 
-
-  <h1><%= @post.title %></h1>
-  <p>
-	  <%= image_tag(@post.image) %>
-  </p>
-  <p>
-  	<%= @post.copy %>
-  </p>
-
-  <ul class="nav nav-tabs" id="myTab">
-    <li class="active">
-      <a href="#guess">Guess</a>
-    </li>
-    <li>
-      <a href="#guesses">Guesses</a>
-    </li>
-    <li>
-      <a href="#song">Song</a>
-    </li>
-  </ul>
-
-  <div class="tab-content">
-    <div class="tab-pane active" id="guess">
-       <%= render :partial => '/guesses/form', :guess => @guess %>
-    </div>
-    <div class="tab-pane" id="song">
-       <%= @song.title %>
-        <p>
-          <%= link_to 'Listen', song_path(@song) %>
-        </p>
-    </div>
-    <div class="tab-pane" id="guesses">  
-      <ol>
-        <% @post.guesses.each do |g| %>
-          <li>
-            <%= link_to "#{g.title} - #{g.artist}", guess_path(g) %>
-            <br/>
-            by <%= g.user.name %>
-          </li> 
-        <% end %>
-      </ol>
-    </div>
+    <% if can? :manage, @post %>
+    <%= link_to 'Edit', edit_post_path(@post), :class => "btn pull-left btn-mini" %>
+    <% end %>
   </div>
+
+  <div class="span3 well" >
+    <% if @post.guesses.length > 0 %> 
+      <h4> Guesses So Far:</h4>
+      
+      <ol id="guesses">
+          <% @post.guesses.each do |g| %>
+            <li>
+              <p>
+              <%= link_to "#{g.title} - #{g.artist}", guess_path(g) %>
+              </p>
+              <p>
+              by <%= g.user.name %>
+            </p>
+            </li> 
+          <% end %>
+        </ol> 
+      <% end %> 
+    <% if Guess.where(:user_id => current_user.id, :post_id => @post.id).empty? == false %>
+    <h4>Song</h4>
+        <h5><%= link_to "#{@song.title} by #{@song.artist}", @song %></h5>
+    <% else %>
+    <h4>Guesses The Song:</h4>
+    <%= render :partial => '/guesses/form', :guess => @guess %>
+    <% end %>
+  </div>
+</div>
+
+
+<style type="text/css">
+
+  ol#guesses li:first-child, ol#guesses li:first-child a   {
+  color: darkgreen;
+}
+
+</style>
+
  
 
 <script>
+
+
+$('ol#guesses li:first-child').prepend('<span class="label pull-right  label-success" >Photographers Guess</span')
   $(function () {
    $('#myTab a').click(function (e) {
       e.preventDefault();

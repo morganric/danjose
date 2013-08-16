@@ -9,7 +9,7 @@
       <%= f.input :copy, :input_html => { :cols => 60, :rows => 3 } %>
     </p>
 
-    <%= f.association :songs , :label => "Select Song #{link_to 'add song', new_song_path, :class => 'btn btn-mini'}" %>
+    <%= f.association :songs , :label => "Select Song #{link_to 'add song', new_song_path(@post), :class => 'btn btn-mini', :target => '_blank'}" %>
 
   </div>
 

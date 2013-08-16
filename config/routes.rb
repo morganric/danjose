@@ -4,6 +4,7 @@ Danjose::Application.routes.draw do
   resources :posts
 
   match "/home/goodbye" => "home#goodbye"
+  match "/home" => "home#index"
 
   authenticated :user do
     root :to => 'posts#index'

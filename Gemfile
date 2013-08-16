@@ -45,3 +45,6 @@ group :test do
 end
 gem "rmagick"
 gem "carrierwave"
+gem 'masonry-rails'
+gem 'querystring'
+gem  'embedly'

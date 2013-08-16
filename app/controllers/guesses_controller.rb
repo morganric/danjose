@@ -1,4 +1,7 @@
 class GuessesController < ApplicationController
+
+  include GuessesHelper
+  
   before_filter :authenticate_user!, :only => [:new, :create, :update, :destroy]
 
   load_and_authorize_resource
@@ -19,6 +22,8 @@ class GuessesController < ApplicationController
   # GET /guesses/1.json
   def show
     @guess = Guess.find(params[:id])
+    @post = Post.find(@guess.post_id)
+    @user = User.find(@guess.user_id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,6 +49,7 @@ class GuessesController < ApplicationController
   # GET /guesses/1/edit
   def edit
     @guess = Guess.find(params[:id])
+
   end
 
   # POST /guesses
@@ -51,6 +57,8 @@ class GuessesController < ApplicationController
   def create
     @guess = Guess.new(params[:guess])
     @post = Post.find(@guess.post_id)
+
+    embedly_guess
 
     respond_to do |format|
       if @guess.save
@@ -67,6 +75,7 @@ class GuessesController < ApplicationController
   # PUT /guesses/1.json
   def update
     @guess = Guess.find(params[:id])
+    @post = Post.find(@guess.post_id)
 
     respond_to do |format|
       if @guess.update_attributes(params[:guess])

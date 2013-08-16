@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+  class PostsController < ApplicationController
   load_and_authorize_resource
   skip_authorize_resource :only => [:index,:show]
   # skip_authorize_resource :only => :show
@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all(:order => "created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -31,6 +31,7 @@ class PostsController < ApplicationController
   # GET /posts/new.json
   def new
     @post = Post.new
+    @songs = Song.all
 
     respond_to do |format|
       format.html # new.html.erb

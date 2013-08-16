@@ -1,4 +1,7 @@
 class SongsController < ApplicationController
+
+  include SongsHelper
+
   load_and_authorize_resource
   skip_authorize_resource :only => [:index, :show]
   # GET /songs
@@ -43,6 +46,9 @@ class SongsController < ApplicationController
   # POST /songs.json
   def create
     @song = Song.new(params[:song])
+    
+
+    embedly
 
     respond_to do |format|
       if @song.save

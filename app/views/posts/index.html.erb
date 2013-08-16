@@ -1,25 +1,55 @@
-<% if can? :manage, @posts %>
-  <%= link_to 'New Post', new_post_path, :class => "btn btn-large pull-right" %>
-<% end %>
+<h1>Headphone Headshots</h1>
 
-<h1>Dan Jose</h1> 
-<ul>
-<% @posts.each do |post| %>
-<li>
-  <h2><%= link_to post.title, post %></h2>
+<div id="masonry-container" class="transitions-enabled centered clearfix masonry">
 
-  <%#= link_to 'thumb', post.image_url(:thumb) %>
-  <p>  
-    <%= link_to image_tag(post.image_url(:thumb)), post %> 
-    <%= truncate(post.copy) %>
-  <p>
+  <% @posts.each do |post| %>
+    <div class="box col3">
+      <h2><%= link_to post.title, post %></h2>
+      <p>
+         <%= link_to image_tag(post.image_url()), post %> 
+         <p>
+          <%= truncate(post.copy) %>
+        </p>
+        <p class="pull-right">
+          <%= post.guesses.length %> guesses.
+        </p>
 
-  <% if can? :manage, post %>
-    <%= link_to 'Edit', edit_post_path(post) %> |
-    <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </p>
+    </div>
   <% end %>
-</li>
-<% end %>
-</ul>
+</div>
 
+<style type="text/css">
+
+h1 {
+  text-align: center;
+}
+
+.box h2 {
+  font-size: 36px !important;
+}
+
+</style>
+
+
+<script type="text/javascript">
+  
+$('.dropdown-toggle').dropdown(); 
+
+ $('img').load(function(){
+            $('#masonry-container').masonry();
+        });
+
+$(function(){  
+  $('#masonry-container').masonry({
+    itemSelector: '.box',
+    columnWidth: 300,
+    gutter: 50,
+    // isAnimated: !Modernizr.csstransitions,
+    isFitWidth: true
+  });
+
+});
+
+</script>
 
