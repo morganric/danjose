@@ -34,7 +34,7 @@
           <% end %>
         </ol> 
       <% end %> 
-    <% if Guess.where(:user_id => current_user.id, :post_id => @post.id).empty? == false %>
+    <% if current_user && @guess.empty? == false %>
     <h4>Song</h4>
         <h5><%= link_to "#{@song.title} by #{@song.artist}", @song %></h5>
     <% else %>

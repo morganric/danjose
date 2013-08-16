@@ -9,7 +9,7 @@ Danjose::Application.routes.draw do
   authenticated :user do
     root :to => 'posts#index'
   end
-  root :to => "posts#index"
+  root :to => "home#index"
   devise_for :users
   resources :users
 end

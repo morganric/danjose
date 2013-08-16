@@ -19,8 +19,11 @@
   def show
     @post = Post.find(params[:id])
     @song = Song.find_by_id(@post.song_ids)
-    @guess = Guess.new  
-
+    if current_user
+      @guess = Guess.where(:user_id => current_user.id, :post_id => @post.id) 
+    else
+      @guess = Guess.new
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
