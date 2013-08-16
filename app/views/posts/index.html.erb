@@ -10,9 +10,9 @@
          <p>
           <%= truncate(post.copy) %>
         </p>
-        <p class="pull-right">
-          <%= post.guesses.length %> guesses.
-        </p>
+        <span class=" label label-success pull-right">
+          <%= pluralize(post.guesses.length, 'guess') %>
+        </span>
 
       </p>
     </div>

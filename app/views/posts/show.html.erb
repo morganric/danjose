@@ -19,7 +19,7 @@
 
   <div class="span3 well" >
     <% if @post.guesses.length > 0 %> 
-      <h4> Guesses So Far:</h4>
+      <h4>  <%= pluralize(@post.guesses.length, 'Guess') %> So Far:</h4>
       
       <ol id="guesses">
           <% @post.guesses.each do |g| %>
