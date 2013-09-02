@@ -1,3 +1,10 @@
 <h1>Welcome</h1>
 
 <h2>You'll need to <%= link_to 'signup', new_user_registration_path, :class => 'btn btn-medium' %> to check this out.</h2>
+<!-- <ul>
+<% @entries.each do |entry| %>
+	<li><h3><%= link_to entry.title.sanitize.capitalize, entry.url, :target => "_blank" %></h3></li>
+<% end %>
+</ul>
+
+<h1><%= @latest.title %></h1> -->

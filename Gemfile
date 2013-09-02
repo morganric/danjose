@@ -47,4 +47,5 @@ gem "rmagick"
 gem "carrierwave"
 gem 'masonry-rails'
 gem 'querystring'
-gem  'embedly'
+gem 'embedly'
+gem 'feedzirra'

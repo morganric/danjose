@@ -1,0 +1,120 @@
+<div class="row clearfix">
+  <div class="span8">
+
+<h1>
+  <%= @photo.title %>
+</h1>
+
+<p id="photo">
+  <%= image_tag @photo.image %>
+</p>
+
+<p id="photoId" class="hidden">
+  <%= @photo.id %>
+</p>
+
+ <section id="songs">
+      <% @options.each_with_index do |option, index| %> 
+        <span class="flex-video hidden" id="<%= index %>" >
+          
+                <%= raw option.embed_code %>
+        </span>   
+      <% end %>
+    </section>
+
+
+    <section id="song" class="hidden">
+      <h2><%= @photo.song_title %></h2> 
+        <span class="flex-video">
+                <%= raw @photo.embed_code %>
+        </span>   
+    </section>
+
+<section id="options" >
+  <h3>What do you think they're listening to?</h3>
+  <ul class="clearfix">
+    <% @options.each_with_index do |option, index| %>
+      <li class="">
+        <%= link_to (image_tag option.thumbnail), "##{index}",  :class => "song-link"  %>
+        <br />
+        <%= link_to "#{option.song_title} by #{option.song_artist}", "##{index}", :class => "song-link" %>  <br/>
+        
+        <button class="guess btn" id="">
+          Guesss <span class="hidden"><%= option.id %></span>
+        </button>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<% if can? :edit, @article %>
+<%= link_to 'Edit', edit_photo_path(@photo) %> |
+<%= link_to 'Back', photos_path %>
+<% end %>
+
+  </div>
+
+  <div class="span4">
+    <%= @photo.guesses.count %>
+  </div>
+</div>
+
+<style type="text/css">
+
+#options ul {
+  margin-left: 0px;
+}
+
+#options ul li {
+  float:left;
+  display:inline;
+}
+
+#options ul li img {
+  width:250px;
+  max-height:150px;
+}
+</style>
+
+
+<script type="text/javascript">
+
+$('.song-link').on('click', function() {
+  console.log('clicked');
+  song = $(this).attr('href');
+  $('section#songs span').addClass('hidden');
+  $('section#songs span'+song).removeClass('hidden');
+});
+
+$('.guess').on('click', function(){
+
+  $('#song, #songs').removeClass('hidden');
+  $('#options').addClass('hidden');
+
+  var correct = true;
+  photoId = $("#photoId").text();
+  guessId = $(this).children().text();
+
+  if (parseInt(photoId) == parseInt(guessId)) {
+    correct = true;
+  } else {
+    correct = false;
+  }
+  console.log("photo: "+photoId);
+  console.log("guess: "+guessId);
+  console.log("correct: "+correct);
+
+  $.ajax({
+    url: "/guesses",
+    type: "POST",
+    data: {guess: {
+             photo_id: photoId, 
+             guess_id: guessId,
+             correct: correct}},
+    success: function(resp){
+    alert("thanks for guessing") }
+});
+
+})
+
+</script>

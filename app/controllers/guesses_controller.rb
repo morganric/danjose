@@ -1,12 +1,4 @@
 class GuessesController < ApplicationController
-
-  include GuessesHelper
-  
-  before_filter :authenticate_user!, :only => [:new, :create, :update, :destroy]
-
-  load_and_authorize_resource
-  skip_authorize_resource :only => [:show,:create,:new,:destroy]
-
   # GET /guesses
   # GET /guesses.json
   def index
@@ -22,8 +14,6 @@ class GuessesController < ApplicationController
   # GET /guesses/1.json
   def show
     @guess = Guess.find(params[:id])
-    @post = Post.find(@guess.post_id)
-    @user = User.find(@guess.user_id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,12 +24,8 @@ class GuessesController < ApplicationController
   # GET /guesses/new
   # GET /guesses/new.json
   def new
-    if !anyone_signed_in?
-      deny_access
-    else
+    @guess = Guess.new
 
-      @guess = Guess.new
-    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @guess }
@@ -49,20 +35,16 @@ class GuessesController < ApplicationController
   # GET /guesses/1/edit
   def edit
     @guess = Guess.find(params[:id])
-
   end
 
   # POST /guesses
   # POST /guesses.json
   def create
     @guess = Guess.new(params[:guess])
-    @post = Post.find(@guess.post_id)
-
-    embedly_guess
 
     respond_to do |format|
       if @guess.save
-        format.html { redirect_to @post, notice: 'Guess was successfully created.' }
+        format.html { redirect_to @guess, notice: 'Guess was successfully created.' }
         format.json { render json: @guess, status: :created, location: @guess }
       else
         format.html { render action: "new" }
@@ -75,7 +57,6 @@ class GuessesController < ApplicationController
   # PUT /guesses/1.json
   def update
     @guess = Guess.find(params[:id])
-    @post = Post.find(@guess.post_id)
 
     respond_to do |format|
       if @guess.update_attributes(params[:guess])

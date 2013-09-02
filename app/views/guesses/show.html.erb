@@ -1,15 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-
-<h1> <%= @guess.title %> by <%= @guess.artist %></h1>
-
-<p clas="well">
-  <%= raw(@guess.embed_code) %>
+<p>
+  <b>Photo:</b>
+  <%= @guess.photo_id %>
 </p>
 
-
 <p>
-  Guessed by <%= link_to "#{@user.name}", user_path(@user) %> on <%= link_to "#{@post.title}", post_path(@post) %>
+  <b>Guess:</b>
+  <%= @guess.guess_id %>
 </p>
 
 

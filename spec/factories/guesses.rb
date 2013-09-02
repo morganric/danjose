@@ -2,13 +2,7 @@
 
 FactoryGirl.define do
   factory :guess do
-    title "MyString"
-    artist "MyString"
-    url "MyString"
-    provider "MyString"
-    embed_code "MyText"
-    correct false
-    user_id 1
-    post_id 1
+    photo_id 1
+    guess_id 1
   end
 end

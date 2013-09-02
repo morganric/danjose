@@ -1,9 +1,9 @@
-<%= link_to "Danjose", root_path, :class => 'brand' %>
+<%= link_to "HH", root_path, :class => 'brand' %>
 <ul class="nav pull-right">
   <% if user_signed_in? %>
     <% if current_user.has_role? :admin %>
       <li>
-        <%= link_to 'New Post', new_post_path %>
+        <%= link_to 'New Photo', new_photo_path %>
       </li>
     <% end %>
       <li class="dropdown">

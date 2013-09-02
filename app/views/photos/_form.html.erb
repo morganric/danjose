@@ -1,0 +1,18 @@
+<%= simple_form_for(@photo) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title %>
+    <%= f.input :image %>
+    <%= f.input :thumbnail, :as => :hidden %>
+    <%= f.input :song_title %>
+    <%= f.input :song_artist %>
+    <%= f.input :song_url %>
+    <%= f.input :published, as: :hidden %>
+    <%= f.input :embed_code, as:  :hidden %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

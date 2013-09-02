@@ -1,0 +1,61 @@
+<h1>Headphone Headshots</h1>
+
+<div id="masonry-container" class="transitions-enabled centered clearfix masonry">
+
+  <% @photos.each do |photo| %>
+    <div class="box col3">
+      <h2><%= link_to photo.title, photo %></h2>
+      <p>
+         <%= link_to image_tag(photo.image_url()), photo %> 
+         <p>
+          <%#= truncate(photo.description) %>
+        </p>
+        <span class=" label label-success pull-right">
+          <%= pluralize(photo.guesses.where(:correct =>  true).length, 'correct') %>
+        </span>
+        <span class=" label label-warning pull-right">
+          <%= pluralize(photo.guesses.where(:correct =>  false).length, 'wrong') %>
+        </span>
+        <span class=" label label-info pull-right">
+          <%= pluralize(photo.guesses.length, 'guess') %>
+        </span>
+        
+
+      </p>
+    </div>
+  <% end %>
+</div>
+
+<style type="text/css">
+
+h1 {
+  text-align: center;
+}
+
+.box h2 {
+  font-size: 24px !important;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+ $('img').load(function(){
+            $('#masonry-container').masonry();
+        });
+
+$(function(){  
+  $('#masonry-container').masonry({
+    itemSelector: '.box',
+    columnWidth: 300,
+    gutter: 50,
+    // isAnimated: !Modernizr.csstransitions,
+    isFitWidth: true
+  });
+
+});
+
+</script>
+
+

@@ -1,8 +1,5 @@
 class Guess < ActiveRecord::Base
-  attr_accessible :artist, :correct, :embed_code, :post_id, :provider, :title, :url, :user_id
+  attr_accessible :guess_id, :photo_id, :correct
 
-  belongs_to :user
   belongs_to :post
-
-  validates_presence_of :title, :artist
 end
