@@ -18,13 +18,18 @@ class PhotosController < ApplicationController
   # GET /photos/1.json
   def show
     @photo = Photo.find(params[:id])
-    @options = Array.new
-    @options << @photo
-    ops = Photo.where("id != ?", @photo.id) 
-    c = ops.count
-    @options << ops.find(:first, :offset => rand(c)) 
-    @options << ops.find(:first, :offset => rand(c))
-    @options.shuffle!
+    # @options = Array.new
+    # @options << @photo
+    # ops = Photo.where("id != ?", @photo.id) 
+    # c = ops.count
+    # @options << ops.find(:first, :offset => rand(c)) 
+    # @options << ops.find(:first, :offset => rand(c))
+    # @options << ops.find(:first, :offset => rand(c))
+    # @options << ops.find(:first, :offset => rand(c))
+    # @options << ops.find(:first, :offset => rand(c))
+    # @options << ops.find(:first, :offset => rand(c))
+    # @options.shuffle!
+    @options = Photo.all.shuffle!
 
     respond_to do |format|
       format.html # show.html.erb

@@ -1,5 +1,5 @@
 	class Photo < ActiveRecord::Base
-  attr_accessible :embed_code, :image, :published, :song_artist, :song_title, :song_url, :thumbnail, :title
+  attr_accessible :embed_code, :image, :published, :song_artist, :song_title, :song_url, :thumbnail, :title, :description
 
   mount_uploader :image, ImageUploader
 
