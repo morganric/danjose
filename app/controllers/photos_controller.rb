@@ -18,18 +18,18 @@ class PhotosController < ApplicationController
   # GET /photos/1.json
   def show
     @photo = Photo.find(params[:id])
-    # @options = Array.new
-    # @options << @photo
-    # ops = Photo.where("id != ?", @photo.id) 
-    # c = ops.count
-    # @options << ops.find(:first, :offset => rand(c)) 
+    @options = Array.new
+    @options << @photo
+    ops = Photo.where("id != ?", @photo.id) 
+    c = ops.count
+    @options << ops.find(:first, :offset => rand(c)) 
+    @options << ops.find(:first, :offset => rand(c))
     # @options << ops.find(:first, :offset => rand(c))
     # @options << ops.find(:first, :offset => rand(c))
     # @options << ops.find(:first, :offset => rand(c))
     # @options << ops.find(:first, :offset => rand(c))
-    # @options << ops.find(:first, :offset => rand(c))
-    # @options.shuffle!
-    @options = Photo.all.shuffle!
+    @options.shuffle!
+    # @options = Photo.all.shuffle!
 
     respond_to do |format|
       format.html # show.html.erb
@@ -67,6 +67,7 @@ class PhotosController < ApplicationController
   def create
     @photo = Photo.new(params[:photo])
     embedly_photo
+    @photo.user = current_user
 
     respond_to do |format|
       if @photo.save

@@ -1,75 +1,80 @@
-<h1>
-  <%= @photo.title %>
-</h1>
 
-
+  <h1>
+    <%#= @photo.title %>
+    <!-- <%# if @photo.user %>by <%#= @photo.user.name %><%# end %> -->
+    Guess what they're listening to...
+  </h1>
 <div class="row clearfix">
-  <div class="span8">
+  <div class="span6 text-center">
 
 
-<p id="photo">
-  <%= image_tag @photo.image %>
-</p>
+    <p id="photo">
+      <%= image_tag @photo.image %>
+    </p>
+    <span class="pull-right">
+    <% if can? :edit, @article %>
+    <%= link_to 'Edit', edit_photo_path(@photo) %>
+    <% end %>
 
-<p id="photoId" class="hidden">
-  <%= @photo.id %>
-</p>
+    </span>
+    <span class="lab"><%= pluralize(@photo.guesses.count, 'guess') %></span>
+    <span class="lab"><%= pluralize(@photo.guesses.where(:correct => true).count, 'correct guess') %></span>
+    <span class="lab"><%= pluralize(@photo.guesses.where(:correct =>  false).count, 'incorrect guess') %></span>
 
- <section id="songs">
-
-      <% @options.each_with_index do |option, index| %>
-        <h2 class="hidden">Listen to...<%= option.song_title %></h2>
-      <div class="hidden flex-video" id="<%= index %>"> 
-                <%= raw option.embed_code %>
-      </div>
-      <% end %>
-    </section>
-
+    <p id="photoId" class="hidden">
+      <%= @photo.id %>
+    </p>
 
     <section id="song" class="hidden">
+      <p class="well">
+        <%= @photo.description %>
+      </p>
       <h2><%= @photo.song_title %></h2> 
         <div class="flex-video widescreen">
                 <%= raw @photo.embed_code %>
         </div>   
     </section>
 
-<% if can? :edit, @article %>
-<%= link_to 'Edit', edit_photo_path(@photo) %> |
-<%= link_to 'Back', photos_path %>
-<% end %>
-
-  </div>
-
-  <div class="span4">
-      <p class="well">
-        <%= @photo.description %>
-      </p>
-
-    <label class="label label-info"><%= pluralize(@photo.guesses.count, 'guess') %></label>
-    <label class="label label-success"><%= pluralize(@photo.guesses.where(:correct => true).count, 'correct guess') %></label>
-    <label class="label label-warning"><%= pluralize(@photo.guesses.where(:correct =>  false).count, 'incorrect guess') %></label>
-    
-    <hr/>
-
-    <section id="options" >
-      <h3>What do you think they're listening to?</h3>
-      <ul class="">
+     <section id="songs">
         <% @options.each_with_index do |option, index| %>
-          <li class="clearfix">
-            <%= link_to (image_tag option.thumbnail), "##{index}",  :class => "song-link"  %>
+        <h2 class="hidden">Are they listening to:<%= option.song_title %></h2>
+        <div class="hidden flex-video" id="<%= index %>"> 
+                  <%= raw option.embed_code %>
+        </div>
+        <% end %>
+    </section>
+  </div>
+  <div class="span2">
+      <section id="options" >
+      <div class="row clearfix text-center">
+        <% @options.each_with_index do |option, index| %>
+          <div class="span2">
+            <%= link_to (image_tag option.thumbnail), "##{index}",  :class => "song-link"  %><br/>
             <%= link_to "#{option.song_title} <br/> by #{option.song_artist}".html_safe, "##{index}", :class => "song-link" %>
-            <a href="#" class="guess btn pull-right" id="">
+            <br/>
+            <a href="#" class="guess btn" id="">
               Guesss <span class="hidden"><%= option.id %></span>
             </a>
-          </li>
+          </div>
         <% end %>
-      </ul>
+      </div>
     </section>
-
   </div>
+
+
+
+
 </div>
 
 <style type="text/css">
+
+.lab {
+  background: grey;
+  color: white;
+  padding: 2px 5px;
+  margin: 2px;
+}
+
 
 #options ul {
   margin-left: 0px;
@@ -82,8 +87,8 @@
   margin-bottom: 5px;
 }
   
-#options ul li img {
-  width:110px;
+#options img {
+  height: 70px;
   /*max-height:50px;*/
 }
 

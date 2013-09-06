@@ -10,5 +10,6 @@ FactoryGirl.define do
     song_url "MyString"
     published false
     embed_code "MyText"
+    user_id 1
   end
 end

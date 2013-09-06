@@ -8,6 +8,7 @@ Danjose::Application.routes.draw do
 
   match "/home/goodbye" => "home#goodbye"
   match "/home" => "home#index"
+  match "/about" => "high_voltage/pages#show", :id => "about"
 
   authenticated :user do
     root :to => 'photos#index'

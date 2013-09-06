@@ -1,3 +1,11 @@
 <h3>User</h3>
 <p>User: <%= @user.name %></p>
-<p>Email: <%= @user.email if @user.email %></p>
+
+<ul>
+	<% @user.photos.each do |photo| %>
+		<li>
+			<%= image_tag photo.image_url(:thumb) %><br />
+			<%= link_to photo.title, photo_path(photo) %>
+		</li>
+	<% end %>
+</ul>
