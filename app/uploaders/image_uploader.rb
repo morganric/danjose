@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
+  include Cloudinary::CarrierWave
 
   # Include RMagick or MiniMagick support:
   include CarrierWave::RMagick
@@ -26,6 +27,9 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   process :scale => [200, 300]
+
+  # process :convert => 'png'
+  # process :tags => ['post_picture']
   
   def scale(width, height)
     # do something
@@ -47,5 +51,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  #  def public_id
+  #   return model.short_name
+  # end 
 
 end

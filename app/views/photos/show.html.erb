@@ -9,7 +9,7 @@
 
 
     <p id="photo">
-      <%= image_tag @photo.image %>
+      <%= cl_image_tag @photo.image_url(:thumb) %>
     </p>
     <span class="pull-right">
     <% if can? :edit, @article %>
