@@ -6,10 +6,13 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    unless current_user && current_user.role == :admin
-    @photos = Photo.where(:published => true)
+
+    if current_user
+      if current_user.has_role? :admin
+        @photos = Photo.all
+      end
     else
-      @photos = Photo.all
+      @photos = Photo.where(:published => true)
     end
 
     respond_to do |format|
