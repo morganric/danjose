@@ -12,8 +12,9 @@
       <%= cl_image_tag @photo.image_url() %>
     </p>
     <span class="pull-right">
-    <% if can? :edit, @article %>
+    <% if can? :manage, @photo %>
     <%= link_to 'Edit', edit_photo_path(@photo) %>
+    <%= link_to 'Delete', photo_path(@photo), :method => :delete %>
     <% end %>
 
     </span>
@@ -29,10 +30,12 @@
       <p class="well">
         <%= @photo.description %>
       </p>
-      <h2><%= @photo.song_title %></h2> 
-        <div class="flex-video widescreen">
-                <%= raw @photo.embed_code %>
-        </div>   
+      <h2>
+        <%= @photo.song_title %>
+      </h2> 
+      <div class="flex-video widescreen">
+          <%= raw @photo.embed_code %>
+      </div>   
     </section>
 
      <section id="songs">
