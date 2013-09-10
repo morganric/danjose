@@ -10,7 +10,9 @@
     <%= f.input :song_title %>
     <%= f.input :song_artist %>
     <%= f.input :song_url %>
-    <%= f.input :published, as: :hidden %>
+    <% if current_user.has_role? :admin %>
+    <%= f.input :published %>
+    <% end %>
     <%= f.input :embed_code, as:  :hidden %>
   </div>
 

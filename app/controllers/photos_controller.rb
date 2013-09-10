@@ -1,11 +1,24 @@
 class PhotosController < ApplicationController
   include PhotosHelper
 
-   load_and_authorize_resource
+  load_and_authorize_resource
   skip_authorize_resource :only => [:index,:show]
   # GET /photos
   # GET /photos.json
   def index
+    unless current_user && current_user.role == :admin
+    @photos = Photo.where(:published => true)
+    else
+      @photos = Photo.all
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @photos }
+    end
+  end
+
+  def admin
     @photos = Photo.all
 
     respond_to do |format|
@@ -18,6 +31,7 @@ class PhotosController < ApplicationController
   # GET /photos/1.json
   def show
     @photo = Photo.find(params[:id])
+
     @options = Array.new
     @options << @photo
     ops = Photo.where("id != ?", @photo.id) 
