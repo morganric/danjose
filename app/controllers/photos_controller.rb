@@ -102,6 +102,7 @@ class PhotosController < ApplicationController
   def update
     @photo = Photo.find(params[:id])
     embedly_photo
+    @photo.save
 
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
