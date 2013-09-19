@@ -53,3 +53,4 @@ gem 'high_voltage'
 gem 'friendly_id'
 gem 'acts_as_commentable_with_threading'
 gem 'cloudinary'
+gem 'debugger', group: [:development, :test]

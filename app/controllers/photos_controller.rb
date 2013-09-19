@@ -83,7 +83,8 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     @photo = Photo.new(params[:photo])
-    embedly_photo
+    url = @photo.song_url
+    embedly_photo(url) 
     @photo.user = current_user
 
     respond_to do |format|
@@ -101,7 +102,9 @@ class PhotosController < ApplicationController
   # PUT /photos/1.json
   def update
     @photo = Photo.find(params[:id])
-    embedly_photo
+    url = @photo.song_url
+    embedly_photo(url) 
+    @photo.song_url = params[:photo][:url]
     @photo.save
 
     respond_to do |format|
