@@ -102,9 +102,10 @@ class PhotosController < ApplicationController
   # PUT /photos/1.json
   def update
     @photo = Photo.find(params[:id])
-    url = @photo.song_url
-    embedly_photo(url) 
-    @photo.song_url = params[:photo][:url]
+    # url = @photo.song_url
+    url = params[:photo][:song_url]
+    embedly_photo(url)
+    
     @photo.save
 
     respond_to do |format|
