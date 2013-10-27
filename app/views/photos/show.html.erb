@@ -1,177 +1,198 @@
 
-  <h1>
-    <%#= @photo.title %>
-    <!-- <%# if @photo.user %>by <%#= @photo.user.name %><%# end %> -->
-    Guess what they're listening to...
-  </h1>
-<div class="row clearfix">
-  <div class="span6 text-center">
+<h1>
+  Guess what they're listening to...
+</h1>
 
+  <div class="row clearfix">
+    <div class="span6 text-center">
 
-    <p id="photo">
-      <%= cl_image_tag @photo.image_url() %>
-    </p>
-    <span class="pull-right">
-    <% if can? :manage, @photo %>
-    <%= link_to 'Edit', edit_photo_path(@photo) %>
-    <%= link_to 'Delete', photo_path(@photo), :method => :delete %>
-    <% end %>
-
-    </span>
-    <span class="lab"><%= pluralize(@photo.guesses.count, 'guess') %></span>
-    <span class="lab"><%= pluralize(@photo.guesses.where(:correct => true).count, 'correct guess') %></span>
-    <span class="lab"><%= pluralize(@photo.guesses.where(:correct =>  false).count, 'incorrect guess') %></span>
-
-    <p id="photoId" class="hidden">
-      <%= @photo.id %>
-    </p>
-
-    <section id="song" class="hidden">
-      <p class="well">
-        <%= @photo.description %>
+      <p id="photo">
+        <%= cl_image_tag @photo.image_url() %>
       </p>
-      <h2>
-        <%= @photo.song_title %>
-      </h2> 
-      <div class="flex-video widescreen">
-          <%= raw @photo.embed_code %>
-      </div>   
-    </section>
+      <span class="pull-right">
+        <% if can? :manage, @photo %>
+          <%= link_to 'Edit', edit_photo_path(@photo) %>
+          <%= link_to 'Delete', photo_path(@photo), :method => :delete %>
+        <% end %>
 
-     <section id="songs">
-        <% @options.each_with_index do |option, index| %>
-        <h2 class="hidden">Are they listening to:<%= option.song_title %></h2>
-        <div class="hidden flex-video" id="<%= index %>"> 
-                  <%= raw option.embed_code %>
-        </div>
-        <% end %>
-    </section>
-  </div>
-  <div class="span2">
-      <section id="options" >
-      <div class="row clearfix text-center">
-        <% @options.each_with_index do |option, index| %>
-          <div class="span2">
-            <%= link_to (image_tag option.thumbnail), "##{index}",  :class => "song-link"  %><br/>
-            <%= link_to "#{option.song_title} <br/> by #{option.song_artist}".html_safe, "##{index}", :class => "song-link" %>
-            <br/>
-            <a href="#" class="guess btn" id="">
-              Guesss <span class="hidden"><%= option.id %></span>
-            </a>
-          </div>
-        <% end %>
+      </span>
+
+      <div class="">
+        <span class="label label-info">
+          <%= pluralize(@photo.guesses.count, 'guess') %>
+        </span>
+        <span class="label label-success">
+          <i class="icon icon-white icon-ok"></i> 
+          <%= pluralize(@photo.guesses.where(:correct => true).count, '') %>
+        </span>
+        <span class="label label-warning">
+          <i class="icon icon-white icon-remove"></i> 
+          <%= pluralize(@photo.guesses.where(:correct =>  false).count, '') %>
+        </span>
       </div>
-    </section>
-  </div>
+
+      <p id="photoId" class="hidden">
+      <%= @photo.id %>
+      </p>
+
+      <section id="song" class="hidden">
+        <p class="well">
+          <%= @photo.description %>
+        </p>
+        <h2>
+          <%= @photo.song_title %>
+        </h2> 
+        <div class="flex-video widescreen">
+            <%= raw @photo.embed_code %>
+        </div>   
+      </section>
+
+       <section id="songs">
+        <hr/>
+          <% @options.each_with_index do |option, index| %>
+          <h2 class="hidden">
+            Are they listening to..? <br/> 
+            <%= option.song_title %>
+          </h2>
+          <div class="hidden flex-video" id="<%= index %>"> 
+                    <%= raw option.embed_code %>
+          </div>
+          <% end %>
+      </section>
+    </div>
+    <div class="span2">
+        <section id="options" >
+        <div class="row clearfix text-center">
+          <% @options.each_with_index do |option, index| %>
+            <div class="span2">
+              <%= link_to (image_tag option.thumbnail), "##{index}",  :class => "song-link"  %><br/>
+              <%= link_to "#{option.song_title} <br/> by #{option.song_artist}".html_safe, "##{index}", :class => "song-link" %>
+              <br/>
+              <a href="#" class="guess btn" id="">
+                Guess <span class="hidden"><%= option.id %></span>
+              </a>
+              <hr/>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    </div>
 
 
 
 
-</div>
+  <style type="text/css">
 
-<style type="text/css">
-
-.lab {
-  background: grey;
-  color: white;
-  padding: 2px 5px;
-  margin: 2px;
-}
-
-
-#options ul {
-  margin-left: 0px;
-}
-
-#options ul li a {
-  float:left;
-  display:inline;
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
-  
-#options img {
-  height: 70px;
-  /*max-height:50px;*/
-}
-
-.flex-video {
-  position: relative;
-  padding-top: 25px;
-  padding-bottom: 67.5%;
-  height: 0;
-  margin-bottom: 16px;
-  overflow: hidden;
-}
- 
-.flex-video.widescreen { padding-bottom: 57.25%; }
-.flex-video.vimeo { padding-top: 0; }
- 
-.flex-video iframe,
-.flex-video object,
-.flex-video embed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-@media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
-  .flex-video { padding-top: 0; }
-}
-
-
-</style>
-
-
-<script type="text/javascript">
-
-$('.song-link').on('click', function() {
-  
-  song = $(this).attr('href');
-  console.log('clicked' + song);
-  $('section#songs div').addClass('hidden');
-  $('section#songs h2').addClass('hidden');
-  $('section#songs div'+song).removeClass('hidden');
-  $('section#songs div'+song).prev('h2').removeClass('hidden');
-});
-
-$('.guess').on('click', function(){
-
-  $('#song, #songs').removeClass('hidden');
-  $('#options').addClass('hidden');
-  $('section#songs div').addClass('hidden');
-
-
-  var correct = true;
-  photoId = $("#photoId").text();
-  guessId = $(this).children().text();
-
-  if (parseInt(photoId) == parseInt(guessId)) {
-    correct = true;
-  } else {
-    correct = false;
+  .song-link {
+    color: black;
   }
-  console.log("photo: "+photoId);
-  console.log("guess: "+guessId);
-  console.log("correct: "+correct);
 
-  $.ajax({
-    url: "/guesses",
-    type: "POST",
-    data: {guess: {
-             photo_id: photoId, 
-             guess_id: guessId,
-             correct: correct}},
-    success: function(resp){
+  .guess {
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+  }
 
-    if (correct) {
-      alert("Welldone! Thanks for guessing") }
-    else {
-      alert("Unlucky! Try another photo")}
-     }
-});
+  .lab {
+    background: grey;
+    color: white;
+    padding: 2px 5px;
+    margin: 2px;
+  }
 
-})
 
-</script>
+  #options ul {
+    margin-left: 0px;
+  }
+
+  #options ul li a {
+    float:left;
+    display:inline;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+    
+  #options img {
+    height: 70px;
+    /*max-height:50px;*/
+  }
+
+  .flex-video {
+    position: relative;
+    padding-top: 25px;
+    padding-bottom: 67.5%;
+    height: 0;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+   
+  .flex-video.widescreen { padding-bottom: 57.25%; }
+  .flex-video.vimeo { padding-top: 0; }
+   
+  .flex-video iframe,
+  .flex-video object,
+  .flex-video embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  @media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
+    .flex-video { padding-top: 0; }
+  }
+
+
+  </style>
+
+
+  <script type="text/javascript">
+
+  $('.song-link').on('click', function() {
+    
+    song = $(this).attr('href');
+    console.log('clicked' + song);
+    $('section#songs div').addClass('hidden');
+    $('section#songs h2').addClass('hidden');
+    $('section#songs div'+song).removeClass('hidden');
+    $('section#songs div'+song).prev('h2').removeClass('hidden');
+  });
+
+  $('.guess').on('click', function(){
+
+    $('#song, #songs').removeClass('hidden');
+    $('#options').addClass('hidden');
+    $('section#songs div').addClass('hidden');
+
+
+    var correct = true;
+    photoId = $("#photoId").text();
+    guessId = $(this).children().text();
+
+    if (parseInt(photoId) == parseInt(guessId)) {
+      correct = true;
+    } else {
+      correct = false;
+    }
+    console.log("photo: "+photoId);
+    console.log("guess: "+guessId);
+    console.log("correct: "+correct);
+
+    $.ajax({
+      url: "/guesses",
+      type: "POST",
+      data: {guess: {
+               photo_id: photoId, 
+               guess_id: guessId,
+               correct: correct}},
+      success: function(resp){
+
+      if (correct) {
+        alert("Welldone! Thanks for guessing") }
+      else {
+        alert("Unlucky! Try another photo")}
+       }
+  });
+
+  })
+
+  </script>

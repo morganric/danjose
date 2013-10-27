@@ -9,7 +9,7 @@ class PhotosController < ApplicationController
 
     if current_user
       if current_user.has_role? :admin
-        @photos = Photo.all
+        @photos = Photo.all.reverse
       end
     else
       @photos = Photo.where(:published => true)
@@ -41,12 +41,7 @@ class PhotosController < ApplicationController
     c = ops.count
     @options << ops.find(:first, :offset => rand(c)) 
     @options << ops.find(:first, :offset => rand(c))
-    # @options << ops.find(:first, :offset => rand(c))
-    # @options << ops.find(:first, :offset => rand(c))
-    # @options << ops.find(:first, :offset => rand(c))
-    # @options << ops.find(:first, :offset => rand(c))
     @options.shuffle!
-    # @options = Photo.all.shuffle!
 
     respond_to do |format|
       format.html # show.html.erb

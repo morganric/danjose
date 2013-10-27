@@ -1,34 +1,25 @@
-<h1>Headphone Headshots</h1>
+<h1>Aural Sets</h1>
 
 <div id="masonry-container" class="transitions-enabled centered clearfix masonry">
 
   <% @photos.each do |photo| %>
     <div class="box col3 text-center">
-      <h2>
-        <%= link_to photo.title, photo %>
-      </h2>
+
       <p>
          <%= link_to image_tag(photo.image_url()), photo %> 
-         <p>
-          <%= truncate(photo.description) %>
-        </p>
-         <h4>
-          <% if photo.user %>by <%= photo.user.name %><% end %>
-        </h4>
-        <div class="text-center">
-        <span class="lab">
-          <%= pluralize(photo.guesses.where(:correct =>  true).length, 'correct') %>
-        </span>
-        <span class="lab">
-          <%= pluralize(photo.guesses.where(:correct =>  false).length, 'wrong') %>
-        </span>
-        <span class="lab">
-          <%= pluralize(photo.guesses.length, 'guess') %>
-        </span>
-      </div>
-        
-
       </p>
+        <div class="text-center">
+          <span class="label label-info">
+            <%= pluralize(photo.guesses.length, 'Guess') %>
+          </span>
+          <span class="label label-success">
+            <i class="icon icon-white icon-ok"></i> <%= pluralize(photo.guesses.where(:correct =>  true).length, '') %>
+          </span>
+          <span class="label label-warning">
+            <i class="icon icon-white icon-remove"></i> <%= pluralize(photo.guesses.where(:correct =>  false).length, '') %>
+          </span>
+        </div>
+        
     </div>
   <% end %>
 </div>
