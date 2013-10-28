@@ -9,12 +9,10 @@ class PhotosController < ApplicationController
 
     if current_user
       if current_user.has_role? :admin
-        # @photos = Photo.order('created_at DESC').page(params[:page]).per(4)
-        @photos = Photo.order(:created_at).page(params[:page]).per(4)
-        Kaminari.paginate_array(@photos).page(params[:page]).per(4)
+        @photos = Photo.order('created_at DESC').page(params[:page]).per(4) 
       end
     else
-      @photos = Photo.where(:published => true)
+      @photos = Photo.where(:published => true).order('created_at DESC').page(params[:page]).per(4)
     end
 
     respond_to do |format|
