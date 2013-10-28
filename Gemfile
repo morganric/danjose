@@ -56,3 +56,4 @@ gem 'cloudinary'
 gem 'debugger', group: [:development, :test]
 gem 'country-select'
 gem 'countries'
+gem 'kaminari'

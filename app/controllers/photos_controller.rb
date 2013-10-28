@@ -9,7 +9,7 @@ class PhotosController < ApplicationController
 
     if current_user
       if current_user.has_role? :admin
-        @photos = Photo.all.reverse
+        @photos = Photo.order('created_at DESC').page(params[:page]).per(4)
       end
     else
       @photos = Photo.where(:published => true)
@@ -17,6 +17,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js # index.js.erb
       format.json { render json: @photos }
     end
   end

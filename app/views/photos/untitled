@@ -1,0 +1,20 @@
+  <% @photos.each do |photo| %>
+    <div class="box col3 text-center">
+
+      <p>
+         <%= link_to image_tag(photo.image_url()), photo %> 
+      </p>
+        <div class="text-center">
+          <span class="label label-info">
+            <%= pluralize(photo.guesses.length, 'Guess') %>
+          </span>
+          <span class="label label-success">
+            <i class="icon icon-white icon-ok"></i> <%= pluralize(photo.guesses.where(:correct =>  true).length, '') %>
+          </span>
+          <span class="label label-warning">
+            <i class="icon icon-white icon-remove"></i> <%= pluralize(photo.guesses.where(:correct =>  false).length, '') %>
+          </span>
+        </div>
+        
+    </div>
+  <% end %>

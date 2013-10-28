@@ -1,30 +1,35 @@
 <h1>Aural Sets</h1>
 
-<div id="masonry-container" class="transitions-enabled centered clearfix masonry">
+<div id="masonry-container" class="transitions-enabled centered infinite-scroll clearfix masonry">
+  <div class="page">
+    <%= render @photos %>
+  </div>
 
-  <% @photos.each do |photo| %>
-    <div class="box col3 text-center">
-
-      <p>
-         <%= link_to image_tag(photo.image_url()), photo %> 
-      </p>
-        <div class="text-center">
-          <span class="label label-info">
-            <%= pluralize(photo.guesses.length, 'Guess') %>
-          </span>
-          <span class="label label-success">
-            <i class="icon icon-white icon-ok"></i> <%= pluralize(photo.guesses.where(:correct =>  true).length, '') %>
-          </span>
-          <span class="label label-warning">
-            <i class="icon icon-white icon-remove"></i> <%= pluralize(photo.guesses.where(:correct =>  false).length, '') %>
-          </span>
-        </div>
-        
-    </div>
-  <% end %>
 </div>
 
+<div id="paginator">
+  <%= paginate @photos %>
+</div>
+
+
+
 <style type="text/css">
+
+
+#masonry-container {
+  background: #FFF;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  clear: both;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
 
 .lab {
   background: grey;
@@ -56,20 +61,54 @@ h1 {
 
 <script type="text/javascript">
 
- $('img').load(function(){
-            $('#masonry-container').masonry();
-        });
+
 
 $(function(){  
-  $('#masonry-container').masonry({
-    itemSelector: '.box',
-    columnWidth: 300,
-    gutter: 50,
-    // isAnimated: !Modernizr.csstransitions,
-    isFitWidth: true
+
+  var $container = $('#masonry-container');
+
+  $container.imagesLoaded(function(){
+    $container.masonry({
+      itemSelector: '.box',
+      columnWidth: 300,
+      gutter: 50,
+      // isAnimated: !Modernizr.csstransitions,
+      isFitWidth: true
+    });
   });
 
+
+  $container.infinitescroll({
+    navSelector  : 'nav.pagination',    // selector for the paged navigation 
+    nextSelector : 'nav.pagination a',  // selector for the NEXT link (to page 2)
+    itemSelector : '.box',     // selector for all items you'll retrieve
+    loading: {
+        finishedMsg: 'No more pages to load.',
+        img: 'http://i.imgur.com/6RMhx.gif'
+      }
+    },
+    // trigger Masonry as a callback
+    function( newElements ) {
+      // hide new items while they are loading
+      var $newElems = $( newElements ).css({ opacity: 0 });
+      // ensure that images load before adding to masonry layout
+
+
+      $newElems.imagesLoaded(function(){
+        // show elems now they're ready
+        $newElems.animate({ opacity: 1 });
+        $container.masonry( 'appended', $newElems, true ); 
+
+      });
+    }
+  );
+
+
+
+
 });
+
+
 
 </script>
 

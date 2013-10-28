@@ -6,6 +6,7 @@
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Danjose" %>">
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>
