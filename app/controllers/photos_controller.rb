@@ -12,7 +12,7 @@ class PhotosController < ApplicationController
         @photos = Photo.order('created_at DESC').page(params[:page]).per(6) 
       end
     else
-      @photos = Photo.where(:published => true).order('created_at DESC').page(params[:page]).per(4)
+      @photos = Photo.where(:published => true).order('created_at DESC').page(params[:page]).per(6)
     end
 
     respond_to do |format|
