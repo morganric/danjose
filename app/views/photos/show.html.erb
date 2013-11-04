@@ -7,7 +7,7 @@
     <div class="span6 text-center">
 
       <p id="photo">
-        <%= cl_image_tag @photo.image_url() %>
+        <%= cl_image_tag @photo.image_url(:standard_aural) %>
       </p>
       <span class="pull-right">
         <% if can? :manage, @photo %>
